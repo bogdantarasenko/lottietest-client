@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+.esbuild
+.next
+.vercel
+.DS_Store
+node_modules/
+build/
+dist/
+tmp/
+temp/
+.npm
+
+
