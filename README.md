@@ -1,6 +1,6 @@
 # Lottie Files Management Application Client
 
-A client application for managing Lottie animation files, built with Next.js, NextAuth, Chakra UI, Apollo GraphqQL, React Hook Form, and localForage.
+A client application for managing Lottie animation files, built with Next.js, NextAuth, Chakra UI, Apollo GraphQL, React Hook Form, and localForage.
 
 ## Table of Contents
 
@@ -15,13 +15,10 @@ A client application for managing Lottie animation files, built with Next.js, Ne
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 
-This application is designed for the seamless management of Lottie animation files. By harnessing the power of Next.js, NextAuth, Chakra UI, React Hook Form, and localForage, it delivers a high-performance, scalable, and accessible platform.
+This application is designed for the seamless management of Lottie animation files. By harnessing the power of Next.js, NextAuth, Chakra UI, Apollo GraphQL, React Hook Form, and localForage, it delivers a high-performance, scalable, and accessible platform.
 
 ## Design Decisions
 
