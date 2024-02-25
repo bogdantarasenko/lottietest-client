@@ -77,7 +77,8 @@ const MyLotiesPageComponent: React.FC = () => {
     tags,
     page,
     pageSize,
-    data.getMy.totalPages
+    data.getMy.totalPages,
+    'getMy'
   );
 
   return (

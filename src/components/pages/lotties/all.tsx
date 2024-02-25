@@ -3,8 +3,8 @@ import { useApolloClient, useQuery } from '@apollo/client';
 import { Text, Box, Center, Heading, VStack } from '@chakra-ui/react';
 import { Spinner, PopUp, TagSelect, GridList, Pagination } from '@/components/ui';
 import { QUERY_ALL_LOTTIES } from '@/services/graphql/allLotties';
-import { GetAllLottiesQuery, GetAllLottiesQueryVariables, Lottie } from 'src/types/gql/graphql';
 import { filterLottiesOfflineWithTags, useNetworkStatus } from '@/lib/utils';
+import { GetAllLottiesQuery, GetAllLottiesQueryVariables, Lottie } from 'src/types/gql/graphql';
 import LottieFile from '@/components/lottieFile';
 
 const AllLotiesPageComponent: React.FC = () => {
@@ -57,7 +57,8 @@ const AllLotiesPageComponent: React.FC = () => {
     tags,
     page,
     pageSize,
-    data.getAll.totalPages
+    data.getAll.totalPages,
+    'getAll'
   );
 
   return (
