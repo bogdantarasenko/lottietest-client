@@ -28,6 +28,7 @@ const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
         },
         refetchQueries: [
           'GetMyLotties',
+          'GetAllLotties',
           'GetAllUniqueTags'
         ]
       });
