@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { GetServerSideProps, NextPage } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
-import SessionType from 'src/types/session';
+import SessionType from '@/types/declaration/session';
 import MyLotties from '@/components/pages/lotties/my';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const MyPage: NextPage<Props> = props => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status === 'loading') return <Spinner />;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Box, Tag, TagLabel, TagCloseButton, Flex, Select, Center, Spinner } from '@chakra-ui/react';
 import { QUERY_ALL_TAGS } from '@/services/graphql/allTags';

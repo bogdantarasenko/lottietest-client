@@ -47,7 +47,7 @@ export type Lottie = {
   __typename?: 'Lottie';
   author: User;
   createdAt: Scalars['DateTime']['output'];
-  id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   path?: Maybe<Scalars['String']['output']>;
   tags: Array<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];

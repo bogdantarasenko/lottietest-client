@@ -14,7 +14,7 @@ type Props = {
 
 const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
   const toast = useToast();
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [uploadFileMutation, { loading, error }] = useMutation(UPLOAD_MUTATION);
 
   const onDrop = useCallback(async ([file]: File[]) => {
@@ -54,7 +54,7 @@ const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
     <Flex height="calc(50vh - 58px)" alignItems="center" justifyContent="center">
       <Container centerContent>
         <VStack spacing={4}>
-          <TagInput onChange={setTags} />
+          <TagInput tags={tags} onChange={setTags} />
           <Box {...getRootProps()} p={5} border="2px dashed" borderColor="gray.200" borderRadius="md" cursor="pointer">
             <input {...getInputProps()} />
             <Text textAlign="center">Drag 'n' drop lottie files here, or click to select files</Text>

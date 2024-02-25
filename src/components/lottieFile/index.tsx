@@ -18,7 +18,7 @@ const LottieFile: React.FC<Props> = ({ isAuthor, isFull, lottie, onSelect, onDel
 
   const { id, path, tags, author } = lottie;
 
-  const [animationData, setAnimationData] = React.useState(null);
+  const [animationData, setAnimationData] = React.useState<{} | null>(null);
 
   React.useEffect(() => {
     const fetchAndCacheLottie = async () => {

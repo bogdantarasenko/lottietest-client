@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   Modal,
   ModalBody,
@@ -8,16 +8,20 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 
-export const PopUp = ({ isOpen, onClose, children }: any) => {
+interface PopUpProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
+
+export const PopUp: React.FC<PopUpProps> = ({ isOpen, onClose, children }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Lottie Animation</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          {children}
-        </ModalBody>
+        <ModalBody>{children}</ModalBody>
       </ModalContent>
     </Modal>
   );

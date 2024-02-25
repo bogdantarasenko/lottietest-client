@@ -27,11 +27,12 @@ const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
 
   const onSubmit = async (data: LoginFormInputs) => {
-    const { ok, error } = await signIn("credentials", {
+    const result = await signIn("credentials", {
       ...data,
       redirect: false,
     });
-    if (ok) {
+
+    if (result?.status === 200) {
       toast({
         title: 'Login successful',
         status: 'success',
@@ -39,10 +40,10 @@ const LoginForm = () => {
         isClosable: true,
       });
       router.replace("/");
-    }
-    if (error) {
+    } else {
       toast({
         title: 'Error',
+        description: result?.error || 'An error occurred',
         status: 'error',
         duration: 9000,
         isClosable: true,

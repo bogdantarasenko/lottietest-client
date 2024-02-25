@@ -22,6 +22,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,
+    "typeRoots": ["src/node_modules/@types", "src/types"],
     "paths": {
       "@/components/*": ["src/components/*"],
       "@/components": ["src/components"],
@@ -31,8 +32,6 @@
       "@/public": ["public"],
       "@/styles/*": ["src/styles/*"],
       "@/styles": ["src/styles"],
-      "@/components/icons/*": ["src/components/icons/*"],
-      "@/components/icons": ["src/components/icons"],
       "@/services/*": ["src/services/*"],
       "@/services": ["src/services"],
       "@/types/*": ["src/types/*"],

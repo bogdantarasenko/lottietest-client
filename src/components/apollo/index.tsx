@@ -14,13 +14,15 @@ const ApolloProviderClient = ({ sessionToken, children }: ApolloProviderChildPro
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 }
 
-export const ApolloProviderWrapper = ({ children }: PropsWithChildren<any>) => {
+export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
   const { data, status } = useSession();
 
   if (status === 'loading') return null;
 
+  const sessionToken = data?.user?.token || '';
+
   return (
-    <ApolloProviderClient sessionToken={data?.user.token || ''}>
+    <ApolloProviderClient sessionToken={sessionToken}>
       {children}
     </ApolloProviderClient>
   );

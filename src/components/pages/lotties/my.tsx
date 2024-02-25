@@ -73,7 +73,7 @@ const MyLotiesPageComponent: React.FC = () => {
   return (
     <Box w="full" py={10}>
       <VStack>
-        <Heading size="md" color="gray.500" mb={3}>
+        <Heading size="md" color="gray.500">
           <TagSelect tags={tags} onChange={setTags} />
         </Heading>
         <GridList>
