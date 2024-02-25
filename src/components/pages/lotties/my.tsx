@@ -1,25 +1,26 @@
 import localforage from 'localforage';
 import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { Text, Box, Center, Heading, VStack } from '@chakra-ui/react';
 import { Spinner, PopUp, TagSelect, GridList, Pagination } from '@/components/ui';
 import { QUERY_MY_LOTTIES } from '@/services/graphql/myLotties';
 import { DELETE_LOTTIE_MUTATION } from '@/services/graphql/deleteLottie';
 import { GetMyLottiesQuery, GetMyLottiesQueryVariables, Lottie } from 'src/types/gql/graphql';
-import { useNetworkStatus } from '@/lib/utils';
+import { filterLottiesOfflineWithTags, useNetworkStatus } from '@/lib/utils';
 import LottieFile from '@/components/lottieFile';
 
 const MyLotiesPageComponent: React.FC = () => {
+  const pageSize = 8;
+  const apolloClient = useApolloClient();
+  const networkStatus = useNetworkStatus();
   const [page, setPage] = useState<number>(1);
   const [tags, setTags] = useState<string[]>([]);
   const [selectedLottie, setSelectedLottie] = useState<Lottie | null>(null);
 
-  const networkStatus = useNetworkStatus();
-
   const { data, loading, error } = useQuery<GetMyLottiesQuery, GetMyLottiesQueryVariables>(
     QUERY_MY_LOTTIES,
     {
-      variables: { tags, page, pageSize: 8 },
+      variables: { tags: networkStatus.online ? tags : [], page, pageSize },
       fetchPolicy: networkStatus.online ? 'cache-and-network' : 'cache-first',
     }
   );
@@ -55,7 +56,11 @@ const MyLotiesPageComponent: React.FC = () => {
   }
 
   if (error) {
-    return <p>ERROR: {error.message}</p>;
+    return (
+      <Center h="calc(100vh - 58px)">
+        <Text>Error: {error.message}</Text>
+      </Center>
+    );
   }
 
   if (!data || !data.getMy || !data.getMy.results.length) {
@@ -66,7 +71,14 @@ const MyLotiesPageComponent: React.FC = () => {
     );
   }
 
-  const { results, hasPreviousPage, hasNextPage, totalPages } = data.getMy;
+  const { results, hasPreviousPage, hasNextPage, totalPages } = networkStatus.online ? data.getMy : filterLottiesOfflineWithTags(
+    apolloClient,
+    QUERY_MY_LOTTIES,
+    tags,
+    page,
+    pageSize,
+    data.getMy.totalPages
+  );
 
   return (
     <Box w="full" py={10}>

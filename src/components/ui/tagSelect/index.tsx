@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Box, Tag, TagLabel, TagCloseButton, Flex, Select, Center, Spinner } from '@chakra-ui/react';
+import { Text, Box, Tag, TagLabel, TagCloseButton, Flex, Select, Center, Spinner } from '@chakra-ui/react';
 import { QUERY_ALL_TAGS } from '@/services/graphql/allTags';
 
 interface TagSelectProps {
@@ -20,11 +20,19 @@ export const TagSelect = ({ tags, onChange }: TagSelectProps) => {
   }
 
   if (error) {
-    return <p>ERROR: {error.message}</p>;
+    return (
+      <Center h="calc(100vh - 58px)">
+        <Text>Error: {error.message}</Text>
+      </Center>
+    );
   }
 
   if (!data || !data.getTags) {
-    return <p>Not found</p>;
+    return (
+      <Center h="calc(100vh - 58px)">
+        <Text>Not found</Text>
+      </Center>
+    );
   }
 
   const removeTag = (indexToRemove: number) => {
