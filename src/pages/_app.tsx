@@ -13,7 +13,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps): JSX
       <Head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>LottieTest PWA</title>
-        <meta name="description" content="Best PWA app in the world!" />
+        <meta name="description" content="Test task for lottiefiles." />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="mask-icon" href="/icons/mask-icon.svg" color="#FFFFFF" />
         <meta name="theme-color" content="#ffffff" />
@@ -34,17 +34,11 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps): JSX
           href="/icons/touch-icon-ipad-retina.png"
         />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://yourdomain.com" />
-        <meta name="twitter:title" content="My awesome PWA app" />
-        <meta name="twitter:description" content="Best PWA app in the world!" />
-        <meta name="twitter:image" content="/icons/twitter.png" />
-        <meta name="twitter:creator" content="@DavidWShadow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="My awesome PWA app" />
+        <meta property="og:title" content="LottieTest PWA" />
         <meta property="og:description" content="Best PWA app in the world!" />
-        <meta property="og:site_name" content="My awesome PWA app" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:site_name" content="LottieTest PWA" />
+        <meta property="og:url" content="https://lottietest-client.vercel.app" />
         <meta property="og:image" content="/icons/og.png" />
         {/* add the following only if you want to add a startup image for Apple devices. */}
         <link

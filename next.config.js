@@ -2,40 +2,47 @@ const withPlugins = require('next-compose-plugins');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
-const {
-  PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD,
-} = require("next/constants");
+const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } = require('next/constants');
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 };
 
-module.exports = (phase) => {
+module.exports = phase => {
   if (phase === PHASE_DEVELOPMENT_SERVER || phase === PHASE_PRODUCTION_BUILD) {
-    const withPWA = require("@ducanh2912/next-pwa").default({
-      dest: "public",
+    const withPWA = require('@ducanh2912/next-pwa').default({
+      dest: 'public',
+      cacheOnFrontEndNav: true,
+      aggressiveFrontEndNavCaching: true,
+      reloadOnOnline: true,
+      swcMinify: true,
+      disable: process.env.NODE_ENV === 'development',
+      workboxOptions: {
+        disableDevLogs: true,
+      },
     });
-    return withPWA(withPlugins(
-      [
-        withBundleAnalyzer({
-          compress: true,
-          webpack(config) {
-            const prod = process.env.NODE_ENV === 'production';
-            const plugins = [...config.plugins];
+    return withPWA(
+      withPlugins(
+        [
+          withBundleAnalyzer({
+            compress: true,
+            webpack(config) {
+              const prod = process.env.NODE_ENV === 'production';
+              const plugins = [...config.plugins];
 
-            return {
-              ...config,
-              mode: prod ? 'production' : 'development',
-              devtool: prod ? 'hidden-source-map' : 'eval-source-map',
-              plugins,
-            };
-          },
-        }),
-      ],
-      {},
-    ));
+              return {
+                ...config,
+                mode: prod ? 'production' : 'development',
+                devtool: prod ? 'hidden-source-map' : 'eval-source-map',
+                plugins,
+              };
+            },
+          }),
+        ],
+        {},
+      ),
+    );
   }
   return nextConfig;
 };

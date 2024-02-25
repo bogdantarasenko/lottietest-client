@@ -23,6 +23,7 @@
         "@emotion/styled": "^11.11.0",
         "@next/bundle-analyzer": "^14.1.0",
         "apollo-upload-client": "^18.0.1",
+        "apollo3-cache-persist": "^0.14.1",
         "graphql": "^16.8.1",
         "localforage": "^1.10.0",
         "next": "^14.1.0",

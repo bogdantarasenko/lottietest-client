@@ -3,9 +3,11 @@ import { useDropzone } from 'react-dropzone';
 import { useMutation } from '@apollo/client';
 import { getServerSession } from 'next-auth';
 import { GetServerSideProps } from 'next';
+import { MdSignalWifiStatusbarConnectedNoInternet } from 'react-icons/md';
 import { Box, Button, Container, Flex, Text, VStack, useToast } from '@chakra-ui/react';
 import { authOptions } from '../../pages/api/auth/[...nextauth]';
 import { UPLOAD_MUTATION } from '@/services/graphql/uploadLottie';
+import { useNetworkStatus } from '@/lib/utils';
 import { TagInput } from '@/components/ui';
 
 type Props = {
@@ -15,6 +17,9 @@ type Props = {
 const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
   const toast = useToast();
   const [tags, setTags] = useState<string[]>([]);
+
+  const networkStatus = useNetworkStatus();
+
   const [uploadFileMutation, { loading, error }] = useMutation(UPLOAD_MUTATION);
 
   const onDrop = useCallback(async ([file]: File[]) => {
@@ -28,7 +33,6 @@ const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
         },
         refetchQueries: [
           'GetMyLotties',
-          'GetAllLotties',
           'GetAllUniqueTags'
         ]
       });
@@ -50,6 +54,16 @@ const LottieUpload: React.FC<Props> = ({ onUploaded }) => {
   }, [uploadFileMutation, toast, tags]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  if (!networkStatus.online) {
+    return (
+      <Flex height="calc(50vh - 58px)" flexDirection="column" alignItems="center" justifyContent="center">
+        <MdSignalWifiStatusbarConnectedNoInternet size={50} />
+        <Text>Oops!</Text>
+        <Text>There is no internet connection</Text>
+      </Flex>
+    )
+  }
 
   return (
     <Flex height="calc(50vh - 58px)" alignItems="center" justifyContent="center">

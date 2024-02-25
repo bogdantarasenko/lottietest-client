@@ -3,6 +3,7 @@ import { isServer } from '@/lib/utils';
 import { setContext } from '@apollo/client/link/context';
 import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 
 let prevToken: string | null = null;
 let _apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
@@ -12,7 +13,18 @@ const httpLink = createUploadLink({
   credentials: 'include'
 });
 
-export const createApolloClient = (token: string) => {
+export const createApolloClient = async (token: string) => {
+  const cache = new InMemoryCache();
+
+  if (!isServer()) {
+    await persistCache({
+      cache,
+      storage: new LocalStorageWrapper(window.localStorage),
+      // Consider adding debounce for performance optimization
+      debounce: 1000,
+    });
+  }
+
   const authLink = setContext((_, { headers }) => {
     return {
       headers: {
@@ -23,25 +35,26 @@ export const createApolloClient = (token: string) => {
       }
     }
   });
+
   return new ApolloClient({
     ssrMode: isServer(),
     link: authLink.concat(httpLink),
-    uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
-    cache: new InMemoryCache(),
+    cache,
   });
 };
 
-export const initializeApollo = (initialState = {}, token: string) => {
-  const client = _apolloClient ?? createApolloClient(token);
+export const initializeApollo = async (initialState = {}, token: string) => {
+  let client = _apolloClient ?? await createApolloClient(token);
 
   if (!_apolloClient || prevToken !== token) {
     prevToken = token;
-    _apolloClient = createApolloClient(token);
+    _apolloClient = await createApolloClient(token);
+    client = _apolloClient;
   }
 
   if (initialState) {
-    const existCache = _apolloClient.extract();
-    _apolloClient.cache.restore({ ...existCache, ...initialState });
+    const existCache = client.extract();
+    client.cache.restore({ ...existCache, ...initialState });
   }
 
   if (isServer()) {
@@ -56,5 +69,11 @@ export const initializeApollo = (initialState = {}, token: string) => {
 };
 
 export const useApollo = (initialState: NormalizedCacheObject, token: string) => {
-  return React.useMemo(() => initializeApollo(initialState, token), [initialState, token]);
+  const [client, setClient] = React.useState<ApolloClient<NormalizedCacheObject> | null>(null);
+
+  React.useEffect(() => {
+    initializeApollo(initialState, token).then(setClient);
+  }, [initialState, token]);
+
+  return client;
 };

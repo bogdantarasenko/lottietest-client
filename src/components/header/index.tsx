@@ -1,14 +1,19 @@
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useMemo, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import { Box, Button, Heading, Flex } from '@chakra-ui/react'; // Import Flex for responsive design
+import { Text, Box, Button, Heading, Flex, Divider } from '@chakra-ui/react'; // Import Flex for responsive design
 import { PopUp } from '@/components/ui';
 import LottieUpload from '@/components/lottieUpload';
+import { useNetworkStatus } from '@/lib/utils';
 
 export const Header: React.FC = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
+
+  const networkStatus = useNetworkStatus();
 
   const handlerLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     signOut();
@@ -21,13 +26,15 @@ export const Header: React.FC = () => {
   const AuthInfo = useMemo(() => {
     if (session) {
       return (
-        <Flex align="center" direction={['column', 'row']} wrap="wrap"> {/* Responsive flex direction */}
+        <Flex align="center" direction={['column', 'row']} wrap="wrap">
           <Box mr={[0, 5]} mb={[2, 0]} textAlign="center">{session.user ? session.user.email : 'ERROR'}</Box>
 
           <Flex mb={[2, 0]} justify="center" wrap="wrap">
-            <Button size="sm" onClick={handlerUpload} mr={2}>
-              Upload
-            </Button>
+            {router.pathname === '/my' && (
+              <Button size="sm" onClick={handlerUpload} mr={2}>
+                Upload
+              </Button>
+            )}
             <Button size="sm" onClick={handlerLogout}>
               Logout
             </Button>
@@ -41,7 +48,7 @@ export const Header: React.FC = () => {
         </NextLink>
       );
     }
-  }, [session]);
+  }, [session, router.pathname]);
 
   return (
     <>
@@ -49,7 +56,7 @@ export const Header: React.FC = () => {
         <Flex align="center" direction={['column', 'row']}>
           <Box mr={[0, 5]} textAlign="center">
             <NextLink href="/">
-              <Heading size="md" mb={[2, 0]}>LottieTest</Heading> {/* Responsive margin */}
+              <Heading size="md" mb={[2, 0]}>LottieTest</Heading>
             </NextLink>
           </Box>
           <Flex mb={[2, 0]} justify="center" wrap="wrap">
@@ -69,6 +76,11 @@ export const Header: React.FC = () => {
         </Flex>
         {AuthInfo}
       </Box>
+      {!networkStatus.online && (
+        <Box py={3} h="auto" display="flex" justifyContent="center" alignItems="center" flexDirection="column" borderBottom="1px solid #f0f5fa">
+          Youre are offline
+        </Box >
+      )}
       {isOpen && (
         <PopUp
           isOpen={isOpen}

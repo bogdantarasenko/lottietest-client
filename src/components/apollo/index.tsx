@@ -11,7 +11,11 @@ interface ApolloProviderChildProps {
 const ApolloProviderClient = ({ sessionToken, children }: ApolloProviderChildProps) => {
   const apolloClient = useApollo({}, sessionToken);
 
-  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+  if (apolloClient) {
+    return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+  } else {
+    return null;
+  }
 }
 
 export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {

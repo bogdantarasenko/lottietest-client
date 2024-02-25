@@ -18,7 +18,7 @@ export const PopUp: React.FC<PopUpProps> = ({ isOpen, onClose, children }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent m={{ base: 2, sm: 0 }}>
         <ModalHeader>Lottie Animation</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{children}</ModalBody>

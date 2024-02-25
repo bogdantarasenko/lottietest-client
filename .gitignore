@@ -11,5 +11,7 @@ dist/
 tmp/
 temp/
 .npm
-
+sw.*
+workbox-*
+swe-worker-*
 

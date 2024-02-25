@@ -4,20 +4,21 @@ import { Text, Box, Center, Heading, VStack } from '@chakra-ui/react';
 import { Spinner, PopUp, TagSelect, GridList, Pagination } from '@/components/ui';
 import { QUERY_ALL_LOTTIES } from '@/services/graphql/allLotties';
 import { GetAllLottiesQuery, GetAllLottiesQueryVariables, Lottie } from 'src/types/gql/graphql';
+import { useNetworkStatus } from '@/lib/utils';
 import LottieFile from '@/components/lottieFile';
 
 const AllLotiesPageComponent: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [tags, setTags] = useState<string[]>([]);
   const [selectedLottie, setSelectedLottie] = useState<Lottie | null>(null);
+
+  const networkStatus = useNetworkStatus();
+
   const { data, loading, error } = useQuery<GetAllLottiesQuery, GetAllLottiesQueryVariables>(
     QUERY_ALL_LOTTIES,
     {
-      variables: {
-        tags,
-        page,
-        pageSize: 8
-      }
+      variables: { tags,  page, pageSize: 8 },
+      fetchPolicy: networkStatus.online ? 'cache-and-network' : 'cache-first',
     }
   );
 

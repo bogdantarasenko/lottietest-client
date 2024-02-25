@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          const client = createApolloClient('');
+          const client = await createApolloClient('');
           const { data } = await client.mutate({
             mutation: MUTATION_LOGIN,
             variables: {

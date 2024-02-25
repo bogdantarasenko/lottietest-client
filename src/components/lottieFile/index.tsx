@@ -3,7 +3,8 @@ import ReactLottie from 'react-lottie';
 import localforage from 'localforage';
 import { Lottie } from 'src/types/gql/graphql';
 import { FaTrash, FaArrowAltCircleDown } from 'react-icons/fa';
-import { Badge, Flex, Text, Box, Divider, IconButton } from '@chakra-ui/react';
+import { Badge, Flex, Text, Box, Divider, IconButton, Tooltip } from '@chakra-ui/react';
+import { useNetworkStatus } from '@/lib/utils';
 
 type Props = {
   lottie: Lottie;
@@ -17,6 +18,8 @@ const LottieFile: React.FC<Props> = ({ isAuthor, isFull, lottie, onSelect, onDel
   if (!lottie) return null;
 
   const { id, path, tags, author } = lottie;
+
+  const networkStatus = useNetworkStatus();
 
   const [animationData, setAnimationData] = React.useState<{} | null>(null);
 
@@ -104,12 +107,18 @@ const LottieFile: React.FC<Props> = ({ isAuthor, isFull, lottie, onSelect, onDel
             </Box>
             <Box>
               {isAuthor && (
-                <IconButton
-                  colorScheme="red"
-                  aria-label="Delete lottie file"
-                  icon={<FaTrash />}
-                  onClick={handleDelete}
-                />
+                <Tooltip
+                  label="Cannot delete when you offline"
+                  isDisabled={networkStatus.online}
+                >
+                  <IconButton
+                    colorScheme="red"
+                    aria-label="Delete lottie file"
+                    icon={<FaTrash />}
+                    onClick={handleDelete}
+                    isDisabled={!networkStatus.online}
+                  />
+                </Tooltip>
               )}
               <IconButton
                 ml="2"
