@@ -22,6 +22,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,
+    "types": ["jest", "node"],
     "typeRoots": ["src/node_modules/@types", "src/types"],
     "paths": {
       "@/components/*": ["src/components/*"],
