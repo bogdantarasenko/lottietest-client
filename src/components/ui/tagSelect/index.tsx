@@ -9,7 +9,7 @@ interface TagSelectProps {
 }
 
 export const TagSelect = ({ tags, onChange }: TagSelectProps) => {
-  const { data, loading, error } = useQuery(QUERY_ALL_TAGS);
+  const { data, loading, error } = useQuery(QUERY_ALL_TAGS, { fetchPolicy: 'cache-and-network' });
 
   if (loading) {
     return (
