@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useMemo, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import { Text, Box, Button, Heading, Flex, Divider } from '@chakra-ui/react'; // Import Flex for responsive design
+import { Box, Button, Heading, Flex } from '@chakra-ui/react';
 import { PopUp } from '@/components/ui';
 import LottieUpload from '@/components/lottieUpload';
 import { useNetworkStatus } from '@/lib/utils';
