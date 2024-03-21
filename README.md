@@ -65,3 +65,10 @@ git clone https://github.com/bogdantarasenko/lottietest-client
 cd lottietest-client
 npm install
 npm run dev
+
+## User credentials for online demo:
+email:    johndoe@gmail.com
+password: johndoe@gmail.com
+
+email:    bogdantarasenko@gmail.com
+password: bogdantarasenko@gmail.com
