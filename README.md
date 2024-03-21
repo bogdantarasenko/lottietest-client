@@ -56,6 +56,13 @@ To enhance offline capabilities and store data efficiently on the client side, l
 - Node.js (LTS version)
 - A modern browser
 
+## User credentials for online demo:
+email:    johndoe@gmail.com
+password: johndoe@gmail.com
+
+email:    bogdantarasenko@gmail.com
+password: bogdantarasenko@gmail.com
+
 ### Installation
 
 To set up the project locally, follow these steps:
@@ -65,10 +72,3 @@ git clone https://github.com/bogdantarasenko/lottietest-client
 cd lottietest-client
 npm install
 npm run dev
-
-## User credentials for online demo:
-email:    johndoe@gmail.com
-password: johndoe@gmail.com
-
-email:    bogdantarasenko@gmail.com
-password: bogdantarasenko@gmail.com
